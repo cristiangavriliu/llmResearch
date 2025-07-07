@@ -110,7 +110,15 @@ def generate_group_b_response(
             messages = history.copy()
             if not messages or messages[0].get("role") != "system":
                 messages.insert(0, {"role": "system", "content": system_prompt})
-            
+            # Replace only the first user message after the system prompt
+            for i in range(len(messages)):
+                if messages[i].get("role") == "user":
+                    messages[i] = {
+                        "role": "user",
+                        "content": f"Auf die Frage, wie ich zu dieser These stehe (Skala 0–100), habe ich {position} angegeben.\n\nAls kurze Begründung bzw. Stellungnahme habe ich folgendes geschrieben: {user_statement}"
+                    }
+                    break
+
             response = client.chat.completions.create(
                 model=MODEL,
                 messages=messages
