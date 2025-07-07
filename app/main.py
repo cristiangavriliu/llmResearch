@@ -147,7 +147,7 @@ async def download_study_data():
             'initialPosition', 'initialInformation', 'initialStatement',
             'finalPosition', 'finalInformation', 
             'totalTimeSeconds', 'chatTimeSeconds',
-            'iframeOpen', 'chatStart', 'chatEnd', 'completion', 'createdAt',
+            'iframeOpen', 'chatStart', 'chatEnd', 'completion',
             'chatHistoryLength', 'chatHistoryJSON'
         ]
         
@@ -159,9 +159,9 @@ async def download_study_data():
             # Flatten timestamps
             timestamps = record.get('timestamps', {})
             
-            # Process chat history
+            # Process chat history with proper UTF-8 encoding
             chat_history = record.get('chatHistory', [])
-            chat_history_json = json.dumps(chat_history) if chat_history else ""
+            chat_history_json = json.dumps(chat_history, ensure_ascii=False) if chat_history else ""
             
             # Helper function to convert timestamp to readable format
             def format_timestamp(ts):
@@ -191,11 +191,9 @@ async def download_study_data():
                 'chatStart': format_timestamp(timestamps.get('chatStart')),
                 'chatEnd': format_timestamp(timestamps.get('chatEnd')),
                 'completion': format_timestamp(timestamps.get('completion')),
-                'createdAt': record.get('createdAt', ''),
                 'chatHistoryLength': len(chat_history),
                 'chatHistoryJSON': chat_history_json
             }
-            
             writer.writerow(row)
         
         # Prepare the response
@@ -211,9 +209,12 @@ async def download_study_data():
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"thesis_study_data_{timestamp}.csv"
         
+        # Add BOM for UTF-8 to ensure proper encoding in Excel and other applications
+        csv_with_bom = '\ufeff' + csv_content
+        
         return StreamingResponse(
-            io.StringIO(csv_content),
-            media_type="text/csv",
+            io.BytesIO(csv_with_bom.encode('utf-8')),
+            media_type="text/csv; charset=utf-8",
             headers={"Content-Disposition": f"attachment; filename={filename}"}
         )
         

@@ -19,7 +19,7 @@ const StudyOverview = () => {
         href={surveyUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="relative inline-block text-blue-600 font-medium group"
+        className="relative inline-block text-blue-600 group"
       >
         Zur Studie
         <span className="block absolute left-0 bottom-0 w-full h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-300"></span>

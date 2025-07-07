@@ -71,7 +71,7 @@ class DatabaseManager:
         """Retrieve all study data from MongoDB"""
         try:
             # Get all documents, excluding the MongoDB _id field
-            cursor = self.collection.find({}, {"_id": 0})
+            cursor = self.collection.find({}, {"_id": 0, "createdAt": 0})
             data = list(cursor)
             logger.info(f"Retrieved {len(data)} study records")
             return data

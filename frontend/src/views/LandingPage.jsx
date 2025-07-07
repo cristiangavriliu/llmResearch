@@ -2,9 +2,10 @@ import React from "react";
 
 const LandingPage = () => (
   <div className="py-6 px-4">
-    <h1 className="text-2xl font-bold text-primary mb-6">Forschung</h1>
+    <h1 className="text-2xl font-bold max-w-md text-primary mb-6">
+      LLMs und politische Meinungsbildung
+    </h1>
     <section className="mb-6">
-      <h2 className="text-lg font-semibold mb-2">Einleitung</h2>
       <p className="text-base max-w-md text-justify">
         Politische Meinungsbildung ist essenziell für informierte Wahlentscheidungen. Zugleich steigt der Bedarf nach digitalen Tools, die Wählerinnen und Wählern helfen, komplexe Thesen zu verstehen. Künstliche Intelligenz eröffnet hier neue Möglichkeiten, indem sie interaktive Diskussionen anbietet.
       </p>
