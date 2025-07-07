@@ -220,18 +220,6 @@ async def download_study_data():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to generate CSV: {str(e)}")
 
-# Get study statistics
-@app.get("/stats")
-async def get_study_stats():
-    try:
-        total_responses = db_manager.get_study_count()
-        return {
-            "total_responses": total_responses,
-            "message": f"Total study responses: {total_responses}"
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to get statistics: {str(e)}")
-
 # API testing chat
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):

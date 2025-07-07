@@ -102,7 +102,7 @@ def generate_group_b_response(
             personal_response = response.choices[0].message.content
             full_response = f"PRO:\n {pro_text}\n\nKONTRA:\n {contra_text}\n\n{personal_response}"
             
-            print(history)
+            # print(history)
             return {"role": "assistant", "content": full_response}
         else:
             # Continuing conversation - use existing history
@@ -116,7 +116,7 @@ def generate_group_b_response(
                 messages=messages
             )
             
-            print(messages)
+            # print(messages)
             return {"role": "assistant", "content": response.choices[0].message.content}
     
     except Exception as e:

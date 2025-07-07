@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const CompletionPhase = ({ studyData, submissionState, retrySubmission }) => {
   // Send message to parent window when completion phase is reached
@@ -47,14 +48,15 @@ const CompletionPhase = ({ studyData, submissionState, retrySubmission }) => {
 
       {/* Error State */}
       {submissionState.error && (
-        <div className="bg-secondary border border-color rounded-lg p-6 space-y-4">
-          <h2 className="text-xl font-bold text-primary mb-2">Fehler beim Speichern</h2>
-          <p className="text-secondary">
-            Ihre Daten konnten nicht gespeichert werden.<br />
-            Bitte versuchen Sie es erneut oder laden Sie die Daten herunter.
+        <div className="bg-secondary border border-red-300 rounded-lg p-6 text-center space-y-4">
+          <div className="mb-4 flex justify-center">
+            <ExclamationTriangleIcon className="h-12 w-12 text-red-500" />
+          </div>
+          <h2 className="text-2xl font-bold text-red-600 mb-2">Fehler beim Speichern</h2>
+          <p className="text-text-secondary mb-2">
+            Laden Sie Ihre Daten lokal herunter und teilen Sie die Daten und Fehlermeldung bitte mit der Studienleitung.
           </p>
-          
-          <div className="space-x-3">
+          <div className="flex space-x-3 justify-center mt-4">
             <button
               onClick={handleRetry}
               disabled={submissionState.isSubmitting}
@@ -62,7 +64,6 @@ const CompletionPhase = ({ studyData, submissionState, retrySubmission }) => {
             >
               {submissionState.isSubmitting ? "Wird wiederholt..." : "Erneut versuchen"}
             </button>
-            
             <button
               onClick={downloadData}
               className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded font-semibold transition"

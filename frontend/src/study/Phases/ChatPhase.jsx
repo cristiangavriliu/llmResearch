@@ -131,7 +131,7 @@ setHistory((msgs) => [
 
 
   // Continue button enabled for group B after at least 6 messages in chat history
-  const canContinue = isGroupB ? history.length >= 6 : true;
+  const canContinue = isGroupB ? history.length >= 6 : history.length >= 2;
 
 
   return (
@@ -186,7 +186,7 @@ setHistory((msgs) => [
                 disabled={aiLoading}
               />
               <button
-                className={`ml-2 bg-accent hover:bg-[var(--accent-color-secondary)] transition rounded-full px-4 py-2 text-white text-sm font-medium ${canContinue ? "cursor-pointer" : "opacity-40 cursor-default"
+                className={`ml-2 bg-accent hover:bg-[var(--accent-color-secondary)] transition rounded-full px-4 py-2 text-white text-sm font-medium ${canContinue ? "cursor-pointer" : "opacity-40 cursor-not-allowed"
                   }`}
                 onClick={() => {
                   setStudyData(prevData => ({ 
@@ -215,7 +215,7 @@ setHistory((msgs) => [
             </div>
           ) : (
             <button
-              className="bg-accent text-white px-4 py-2 rounded font-semibold hover:bg-[var(--accent-color-secondary)] transition ml-auto block cursor-pointer"
+              className={`bg-accent text-white px-4 py-2 rounded font-semibold hover:bg-[var(--accent-color-secondary)] transition ml-auto block ${history.length >= 2 ? "cursor-pointer" : "opacity-40 cursor-not-allowed"}`}
               onClick={() => {
                 setStudyData(prevData => ({ 
                   ...prevData, 
@@ -227,6 +227,7 @@ setHistory((msgs) => [
                 }));
                 nextPhase();
               }}
+              disabled={history.length < 2}
             >
               weiter
             </button>
