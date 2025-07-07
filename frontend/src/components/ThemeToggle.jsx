@@ -59,13 +59,8 @@ const ThemeToggle = () => {
               />
               {/* Custom toggle track with border */}
               <div
-                className="w-10 h-5 rounded-full transition-colors duration-200 border"
-                style={{
-                  background: isDark
-                    ? "var(--accent-color)"
-                    : "var(--border-color)",
-                  borderColor: "var(--border-color)",
-                }}
+                className={`w-10 h-5 rounded-full transition-colors duration-200 ${isDark ? "bg-accent" : ""}`}
+                style={!isDark ? { backgroundColor: "var(--text-secondary)" } : undefined}
               ></div>
               {/* Custom toggle thumb */}
               <div

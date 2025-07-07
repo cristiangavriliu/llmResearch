@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import ErrorCard from "../components/ErrorCard";
+import ErrorCard from "../../components/ErrorCard";
 import InitialPhase from "./Phases/InitialPhase";
-import { theses } from "../data/theses";
+import { theses } from "../../data/theses";
 import ChatPhase from "./Phases/ChatPhase";
 import FinalAssessment from "./Phases/FinalAssessment";
 import CompletionPhase from "./Phases/CompletionPhase";

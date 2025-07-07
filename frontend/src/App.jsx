@@ -2,12 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import ThemeToggle from "./components/ThemeToggle";
-import StudyIframe from "./study/StudyIframe";
 
-// Placeholder static pages
-const Home = () => <div className="p-8">Home Page</div>;
-const ApiTester = () => <div className="p-8">API Tester Page</div>;
-const Research = () => <div className="p-8">Research Page</div>;
+import StudyIframe from "./views/study/StudyIframe";
+import LandingPage from "./views/LandingPage";
+import ApiTester from "./views/ApiTester";
+import StudyOverview from "./views/StudyOverview";
 
 function App() {
   return (
@@ -15,9 +14,9 @@ function App() {
       <Routes>
         {/* Static pages wrapped in Navigation */}
         <Route element={<Navigation />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/api-tester" element={<ApiTester />} />
-          <Route path="/research" element={<Research />} />
+          <Route path="/study-overview" element={<StudyOverview />} />
         </Route>
         {/* Study iframe-like route, no navigation */}
         <Route
