@@ -8,9 +8,9 @@ import csv
 import io
 import json
 from datetime import datetime
-from api_interface import generate_group_a_response, generate_group_b_response
-from thesis_data import get_thesis_data
-from database import db_manager
+from app.api_interface import generate_group_a_response, generate_group_b_response
+from app.thesis_data import get_thesis_data
+from app.database import db_manager
 
 app = FastAPI()
 
