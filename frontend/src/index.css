@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Exact theme colors from original project */
+:root {
+  --bg-primary:     #E5E5E5; /* neutral-200 */
+  --bg-secondary:   #D4D4D4; /* neutral-300 */
+  --text-primary: #000000; /* black */
+  --text-secondary: #737373; /* neutral-500 */
+  --border-color:   #A3A3A3; /* neutral-400 */
+  --accent-color: #3B82F6;   /* blue-500 */
+  --accent-color-secondary: #1E3A8A;   /* blue-900 */
+}
+
+.dark {
+  --bg-primary:     #111827; /* gray-900 */
+  --bg-secondary:   #1F2937; /* gray-800 */
+  --text-primary:   #FAFAFA; /* neutral-50 */
+  --text-secondary: #D4D4D4; /* neutral-300 */
+  --border-color:   #9CA3AF; /* gray-400 */
+  --accent-color: #1D4ED8;   /* blue-700 */
+  --accent-color-secondary: #1E3A8A;   /* blue-900 */
+}
+
+/* Utility classes for theme colors */
+.bg-primary       { background-color: var(--bg-primary); }
+.bg-secondary     { background-color: var(--bg-secondary); }
+.bg-accent        { background-color: var(--accent-color); }
+.text-primary     { color: var(--text-primary); }
+.text-secondary   { color: var(--text-secondary); }
+.text-accent      { color: var(--accent-color); }
+.border-color     { border-color: var(--border-color); }
+
+/* Global styles for full coverage */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+#root {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+/* Remove focus rings globally */
+* {
+  outline: none;
+}
+
+*:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
