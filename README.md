@@ -41,7 +41,7 @@ npm run build
 **Start Backend:**
 ```bash
 cd backend
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 **Build Frontend:**

@@ -176,18 +176,25 @@ setHistory((msgs) => [
         </div>
         <div className="max-w-2xl mx-auto pb-4 bg-primary">
           {isGroupB ? (
-            <div className="flex items-end bg-secondary border border-color rounded-lg p-3">
+            <div className={`flex items-end bg-secondary border border-color rounded-lg p-3 ${
+              aiLoading ? "cursor-not-allowed" : ""
+            }`}>
               <textarea
                 rows={1}
                 placeholder="Deine Nachricht..."
-                className="flex-grow resize-none overflow-auto bg-transparent text-primary focus:outline-none text-sm py-1 pl-1 min-h-[68px] max-h-32"
+                className={`flex-grow resize-none overflow-auto bg-transparent text-primary focus:outline-none text-sm py-1 pl-1 min-h-[68px] max-h-32 ${
+                  aiLoading ? "cursor-not-allowed" : ""
+                }`}
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 disabled={aiLoading}
               />
               <button
-                className={`ml-2 bg-accent hover:bg-[var(--accent-color-secondary)] transition rounded-full px-4 py-2 text-white text-sm font-medium ${canContinue ? "cursor-pointer" : "opacity-40 cursor-not-allowed"
-                  }`}
+                className={`ml-2 bg-accent hover:bg-[var(--accent-color-secondary)] transition rounded-full px-4 py-2 text-white text-sm font-medium ${
+                  canContinue && !aiLoading
+                    ? "cursor-pointer"
+                    : "opacity-40 cursor-not-allowed"
+                }`}
                 onClick={() => {
                   setStudyData(prevData => ({ 
                     ...prevData, 
@@ -199,7 +206,7 @@ setHistory((msgs) => [
                   }));
                   nextPhase();
                 }}
-                disabled={!canContinue}
+                disabled={!canContinue || aiLoading}
               >
                 weiter
               </button>
@@ -215,7 +222,11 @@ setHistory((msgs) => [
             </div>
           ) : (
             <button
-              className={`bg-accent text-white px-4 py-2 rounded font-semibold hover:bg-[var(--accent-color-secondary)] transition ml-auto block ${history.length >= 2 ? "cursor-pointer" : "opacity-40 cursor-not-allowed"}`}
+              className={`bg-accent text-white px-4 py-2 rounded font-semibold hover:bg-[var(--accent-color-secondary)] transition ml-auto block ${
+                history.length >= 2 && !aiLoading
+                  ? "cursor-pointer"
+                  : "opacity-40 cursor-not-allowed"
+              }`}
               onClick={() => {
                 setStudyData(prevData => ({ 
                   ...prevData, 
@@ -227,7 +238,7 @@ setHistory((msgs) => [
                 }));
                 nextPhase();
               }}
-              disabled={history.length < 2}
+              disabled={history.length < 2 || aiLoading}
             >
               weiter
             </button>
