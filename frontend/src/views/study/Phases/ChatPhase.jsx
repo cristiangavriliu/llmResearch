@@ -10,6 +10,8 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
   const [aiLoading, setAiLoading] = useState(false);
   const chatBoxRef = useRef(null);
   const chatContainerRef = useRef(null);
+  const thesisTextRef = useRef(null);
+  const [isOneLine, setIsOneLine] = useState(true);
   const initialFetchDone = useRef(false);
 
 
@@ -24,6 +26,15 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
   }, [history, aiLoading]);
 
   const isGroupB = studyParams?.group === "B";
+
+  useEffect(() => {
+    if (!thesisTextRef.current) return;
+    const el = thesisTextRef.current;
+    const style = window.getComputedStyle(el);
+    const lineHeight = parseFloat(style.lineHeight);
+    const height = el.offsetHeight;
+    setIsOneLine(height <= lineHeight + 2);
+  }, [studyData.thesisText]);
 
   // On mount: set chat start timestamp and fetch initial AI message for both groups
   useEffect(() => {
@@ -142,7 +153,12 @@ setHistory((msgs) => [
       <div className="fixed top-0 left-0 right-0 z-40">
         <div className="max-w-2xl mx-auto border-b border-color bg-primary py-4 px-8 pt-12">
           <div className="text-sm text-secondary">These: {studyData.thesisTitle || "..."}</div>
-          <div className="text-lg font-semibold text-primary">{studyData.thesisText || "..."}</div>
+          <div
+            className="text-lg font-semibold text-primary"
+            ref={thesisTextRef}
+          >
+            {studyData.thesisText || "..."}
+          </div>
         </div>
         {/* Bottom shadow gradient */}
         <div className="pointer-events-none h-4 relative">
@@ -153,7 +169,7 @@ setHistory((msgs) => [
       {/* Chat Messages - Full width container for proper scrollbar positioning */}
       <div 
         ref={chatContainerRef}
-        className="bg-primary h-screen overflow-y-auto scrollbar-hide scroll-smooth pt-32 pb-32"
+        className={`bg-primary h-screen overflow-y-auto scrollbar-hide scroll-smooth ${isOneLine ? "pt-32" : "pt-40"} pb-32`}
       >
         <div
           ref={chatBoxRef}

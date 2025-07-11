@@ -131,13 +131,31 @@ const ApiTester = () => {
     statement.trim().length >= 50;
 
   // Render chat phase as root-level fragment, input phase in container
+  const [isOneLine, setIsOneLine] = useState(true);
+  const thesisTextRef = useRef(null);
+
+  useEffect(() => {
+    if (!chatStarted) return;
+    if (!thesisTextRef.current) return;
+    const el = thesisTextRef.current;
+    const style = window.getComputedStyle(el);
+    const lineHeight = parseFloat(style.lineHeight);
+    const height = el.offsetHeight;
+    setIsOneLine(height <= lineHeight + 2);
+  }, [chatStarted, thesis && thesis.text]);
+
   return chatStarted ? (
     <>
       {/* Fixed Header */}
       <div className="fixed top-0 left-0 right-0 z-40">
         <div className="max-w-2xl mx-auto border-b border-color bg-primary py-4 px-8 pt-12">
           <div className="text-sm text-secondary">These: {thesis ? thesis.title : "---"}</div>
-          <div className="text-lg font-semibold text-primary min-h-[2lh]">{thesis ? thesis.text : "---"}</div>
+          <div
+            className="text-lg font-semibold text-primary"
+            ref={thesisTextRef}
+          >
+            {thesis ? thesis.text : "---"}
+          </div>
         </div>
         {/* Bottom shadow gradient */}
         <div className="pointer-events-none h-4 relative">
@@ -148,7 +166,7 @@ const ApiTester = () => {
       {/* Chat Messages - Full width container for proper scrollbar positioning */}
       <div 
         ref={chatContainerRef}
-        className="bg-primary h-screen overflow-y-auto scrollbar-hide scroll-smooth pt-32 pb-32"
+        className={`bg-primary h-screen overflow-y-auto scrollbar-hide scroll-smooth ${isOneLine ? "pt-32" : "pt-40"} pb-32`}
       >
         <div
           ref={chatBoxRef}
