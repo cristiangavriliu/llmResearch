@@ -1,0 +1,45 @@
+theses = [
+    {"id": 1, "title": "Unterstützung der Ukraine", "text": "Deutschland soll die Ukraine weiterhin militärisch unterstützen."},
+    {"id": 2, "title": "Erneuerbare Energien", "text": "Der Ausbau erneuerbarer Energien soll weiterhin vom Staat finanziell gefördert werden."},
+    {"id": 3, "title": "Streichung des Bürgergelds", "text": "Das Bürgergeld soll denjenigen gestrichen werden, die wiederholt Stellenangebote ablehnen."},
+    {"id": 4, "title": "Tempolimit auf Autobahnen", "text": "Auf allen Autobahnen soll ein generelles Tempolimit gelten."},
+    {"id": 5, "title": "Abweisung Asylsuchender", "text": "Asylsuchende, die über einen anderen EU-Staat eingereist sind, sollen an den deutschen Grenzen abgewiesen werden."},
+    {"id": 6, "title": "Begrenzung der Mietpreise", "text": "Bei Neuvermietungen sollen die Mietpreise weiterhin gesetzlich begrenzt werden."},
+    {"id": 7, "title": "Automatisierte Gesichtserkennung", "text": "An Bahnhöfen soll die Bundespolizei Software zur automatisierten Gesichtserkennung einsetzen dürfen."},
+    {"id": 8, "title": "Energieintensive Unternehmen", "text": "Energieintensive Unternehmen sollen vom Staat einen finanziellen Ausgleich für ihre Stromkosten erhalten."},
+    {"id": 9, "title": "Rente nach 40 Beitragsjahren", "text": "Alle Beschäftigten sollen bereits nach 40 Beitragsjahren ohne Abschläge in Rente gehen können."},
+    {"id": 10, "title": "Grundgesetz", "text": "Im einleitenden Satz des Grundgesetzes soll weiterhin die Formulierung 'Verantwortung vor Gott' stehen."},
+    {"id": 11, "title": "Anwerbung von Fachkräften", "text": "Deutschland soll weiterhin die Anwerbung von Fachkräften aus dem Ausland fördern."},
+    {"id": 12, "title": "Nutzung der Kernenergie", "text": "Für die Stromerzeugung soll Deutschland wieder Kernenergie nutzen."},
+    {"id": 13, "title": "Anhebung des Spitzensteuersatzes", "text": "Bei der Besteuerung von Einkommen soll der Spitzensteuersatz angehoben werden."},
+    {"id": 14, "title": "Kompetenzen in der Schulpolitik", "text": "Der Bund soll mehr Kompetenzen in der Schulpolitik erhalten."},
+    {"id": 15, "title": "Rüstungsexporte nach Israel", "text": "Aus Deutschland sollen weiterhin Rüstungsgüter nach Israel exportiert werden dürfen."},
+    {"id": 16, "title": "Krankenkassen", "text": "Alle Bürgerinnen und Bürger sollen in gesetzlichen Krankenkassen versichert sein müssen."},
+    {"id": 17, "title": "Abschaffung der Frauenquote", "text": "Die gesetzliche Frauenquote in Vorständen und Aufsichtsräten börsennotierter Unternehmen soll abgeschafft werden."},
+    {"id": 18, "title": "Ökologische Landwirtschaft", "text": "Ökologische Landwirtschaft soll stärker gefördert werden als konventionelle Landwirtschaft."},
+    {"id": 19, "title": "Projekte gegen Rechtsextremismus", "text": "Der Bund soll Projekte gegen Rechtsextremismus verstärkt fördern."},
+    {"id": 20, "title": "Kontrolle von Zulieferern", "text": "Unternehmen sollen weiterhin die Einhaltung der Menschenrechte und des Umweltschutzes bei allen Zulieferern kontrollieren müssen."},
+    {"id": 21, "title": "Elternabhängiges BAföG", "text": "Die Ausbildungsförderung BAföG soll weiterhin abhängig vom Einkommen der Eltern gezahlt werden."},
+    {"id": 22, "title": "Schuldenbremse", "text": "Die Schuldenbremse im Grundgesetz soll beibehalten werden."},
+    {"id": 23, "title": "Arbeitserlaubnis für Asylsuchende", "text": "Asylsuchende sollen in Deutschland sofort nach ihrer Antragstellung eine Arbeitserlaubnis erhalten."},
+    {"id": 24, "title": "Verwerfen der Klimaziele", "text": "Deutschland soll das Ziel verwerfen, klimaneutral zu werden."},
+    {"id": 25, "title": "35-Stunden-Woche", "text": "In Deutschland soll die 35-Stunden-Woche als gesetzliche Regelarbeitszeit für alle Beschäftigten festgelegt werden."},
+    {"id": 26, "title": "Schwangerschaftsabbruch nach Beratung", "text": "Schwangerschaftsabbrüche sollen in den ersten drei Monaten weiterhin nur nach Beratung straffrei sein."},
+    {"id": 27, "title": "Nationale Währung", "text": "Der Euro soll in Deutschland durch eine nationale Währung ersetzt werden."},
+    {"id": 28, "title": "Schiene vor Straße", "text": "Beim Ausbau der Verkehrsinfrastruktur soll die Schiene Vorrang vor der Straße haben."},
+    {"id": 29, "title": "Ehrenamt", "text": "Ehrenamtliche Tätigkeiten sollen auf die zukünftige Rente angerechnet werden."},
+    {"id": 30, "title": "Umlegung der Grundsteuer", "text": "Die Grundsteuer soll weiterhin auf Mieterinnen und Mieter umgelegt werden dürfen."},
+    {"id": 31, "title": "Einschränkung des Streikrechts", "text": "Das Streikrecht für Beschäftigte in Unternehmen der kritischen Infrastruktur soll gesetzlich eingeschränkt werden."},
+    {"id": 32, "title": "Volksentscheide", "text": "In Deutschland soll es auf Bundesebene Volksentscheide geben können."},
+    {"id": 33, "title": "Strafrecht für unter 14-Jährige", "text": "Unter 14-Jährige sollen strafrechtlich belangt werden können."},
+    {"id": 34, "title": "Abschaffung von Zöllen", "text": "Deutschland soll sich für die Abschaffung der erhöhten EU-Zölle auf chinesische Elektroautos einsetzen."},
+    {"id": 35, "title": "Zweite Staatsbürgerschaft", "text": "In Deutschland soll es weiterhin generell möglich sein, neben der deutschen eine zweite Staatsbürgerschaft zu haben."},
+    {"id": 36, "title": "Soziales Pflichtjahr", "text": "Für junge Erwachsene soll ein soziales Pflichtjahr eingeführt werden."},
+    {"id": 37, "title": "Fossile Brennstoffe", "text": "Neue Heizungen sollen auch zukünftig vollständig mit fossilen Brennstoffen (z. B. Gas oder Öl) betrieben werden dürfen."},
+    {"id": 38, "title": "Erhöhung des Mindestlohns", "text": "Der gesetzliche Mindestlohn soll spätestens 2026 auf 15 Euro erhöht werden."}
+]
+
+
+def get_thesis_by_id(id):
+    """Return the thesis dict with the given id, or None if not found."""
+    return next((thesis for thesis in theses if thesis["id"] == id), None)

@@ -8,9 +8,10 @@ import csv
 import io
 import json
 from datetime import datetime
-from app.api_interface import generate_group_a_response, generate_group_b_response
+from app.api_interface import generate_group_a_response, generate_group_b_response, generate_api_tester_response
 from app.thesis_data import get_thesis_data
 from app.database import db_manager
+from wahl_o_maht_thesen import get_thesis_by_id
 
 app = FastAPI()
 
@@ -224,13 +225,20 @@ async def download_study_data():
 
 @app.post("/api-tester/chat")
 async def api_tester_chat(request: ChatRequest):
-    # Placeholder logic: echo last user message or statement
-    if request.history and isinstance(request.history, list):
-        last_user = next((msg for msg in reversed(request.history) if msg.get("role") == "user"), None)
-        content = last_user["content"] if last_user else request.statement
-    else:
-        content = request.statement
-    return {"role": "assistant", "content": f"API-Tester Echo: {content}"}
+    thesis = get_thesis_by_id(request.thesis_id)
+    if not thesis:
+        return {"role": "error", "content": f"Thesis with id {request.thesis_id} not found."}
+    thesis_text = thesis["text"]
+
+    result = generate_api_tester_response(
+        thesis_text=thesis_text,
+        position=request.initial_position,
+        user_statement=request.initial_statement,
+        history=request.history,
+        api_key=request.api_key,
+        model=request.model
+    )
+    return result
 
 
 # Catch-all route for frontend (for React Router) - MUST be last!

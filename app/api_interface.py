@@ -57,6 +57,71 @@ def generate_group_a_response(
     except Exception as e:
         return {"role": "error", "content": f"api_interface Error: {str(e)}"}
 
+def generate_api_tester_response(
+    thesis_text: str,
+    position: int,
+    user_statement: str,
+    history: Optional[List[Dict[str, str]]],
+    api_key: str,
+    model: str
+) -> Dict[str, str]:
+    """
+    Generate a response using a custom API key and model, and prompt the model to provide both pro and contra arguments.
+    """
+    from openai import OpenAI
+
+    system_prompt = (
+        "Du bist ein neutraler, faktenbasierter KI-Assistent für politische Diskussionen. "
+        "Vermeide parteiische Aussagen oder Werturteile. Präsentiere alle Perspektiven sachlich und respektvoll.\n"
+        "Wir diskutieren die folgende These aus dem Wahl-O-Mat zur Bundestagswahl 2025:\n\n"
+        f'"{thesis_text}"\n\n'
+        "Bitte nenne in deiner ersten Antwort jeweils mindestens ein PRO- und ein KONTRA-Argument zu dieser These. "
+        "Kennzeichne die Argumente klar als PRO und KONTRA. "
+        "Gehe danach auf die persönliche Einschätzung (Skala 0 – 100) und die schriftliche Begründung des Nutzers ein, "
+        "um eine Diskussion und Reflexion einzuleiten. "
+        "Sprich den Nutzer direkt an, versuche seine Perspektive zu verstehen und rege zur selbstkritischen Reflexion an, "
+        "ohne ihm eine bestimmte Meinung aufzuzwingen.\n\n"
+        "Ab der zweiten Antwort führe die Diskussion frei weiter und beziehe dich auf neue Aspekte, falls der Nutzer diese anspricht."
+    )
+
+    try:
+        client = OpenAI(api_key=api_key)
+        if not history:
+            user_message = f"Auf die Frage, wie ich zu dieser These stehe (Skala 0–100), habe ich {position} angegeben.\n\nAls kurze Begründung bzw. Stellungnahme habe ich folgendes geschrieben: {user_statement}"
+
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message}
+            ]
+
+            response = client.chat.completions.create(
+                model=model,
+                messages=messages
+            )
+
+            return {"role": "assistant", "content": response.choices[0].message.content}
+        else:
+            messages = history.copy()
+            if not messages or messages[0].get("role") != "system":
+                messages.insert(0, {"role": "system", "content": system_prompt})
+            for i in range(len(messages)):
+                if messages[i].get("role") == "user":
+                    messages[i] = {
+                        "role": "user",
+                        "content": f"Auf die Frage, wie ich zu dieser These stehe (Skala 0–100), habe ich {position} angegeben.\n\nAls kurze Begründung bzw. Stellungnahme habe ich folgendes geschrieben: {user_statement}"
+                    }
+                    break
+
+            response = client.chat.completions.create(
+                model=model,
+                messages=messages
+            )
+
+            return {"role": "assistant", "content": response.choices[0].message.content}
+
+    except Exception as e:
+        return {"role": "error", "content": f"api_tester Error: {str(e)}"}
+
 def generate_group_b_response(
     thesis_text: str,
     position: int,
