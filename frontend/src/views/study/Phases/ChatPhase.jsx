@@ -9,15 +9,17 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
   ]);
   const [aiLoading, setAiLoading] = useState(false);
   const chatBoxRef = useRef(null);
+  const chatContainerRef = useRef(null);
   const initialFetchDone = useRef(false);
 
 
-  // Scroll to bottom on new message (scroll the window, not the chat box)
+  // Scroll to bottom on new message (scroll only the chat container, not the window)
   useEffect(() => {
-    if (chatBoxRef.current) {
-      // Scroll the last message into view
-      const last = chatBoxRef.current.lastElementChild;
-      if (last) last.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
     }
   }, [history, aiLoading]);
 
@@ -135,11 +137,11 @@ setHistory((msgs) => [
 
 
   return (
-    <div className="min-h-screen bg-primary text-text-primary max-w-2xl mx-auto pt-2">
+    <>
       {/* Fixed Header */}
-      <div className="fixed top-0 left-0 right-0 z-40 px-5 max-w-2xl mx-auto">
-        <div className="border-b border-color bg-primary pt-10 p-3">
-          <div className="text-sm text-secondary pt-3 ">These: {studyData.thesisTitle || "..."}</div>
+      <div className="fixed top-0 left-0 right-0 z-40">
+        <div className="max-w-2xl mx-auto border-b border-color bg-primary py-4 px-8 pt-12">
+          <div className="text-sm text-secondary">These: {studyData.thesisTitle || "..."}</div>
           <div className="text-lg font-semibold text-primary">{studyData.thesisText || "..."}</div>
         </div>
         {/* Bottom shadow gradient */}
@@ -148,13 +150,15 @@ setHistory((msgs) => [
         </div>
       </div>
 
-      {/* Chat Messages */}
-      <div className="py-32 px-8">
+      {/* Chat Messages - Full width container for proper scrollbar positioning */}
+      <div 
+        ref={chatContainerRef}
+        className="bg-primary h-screen overflow-y-auto scrollbar-hide scroll-smooth pt-32 pb-32"
+      >
         <div
           ref={chatBoxRef}
-          className="space-y-3 text-sm text-secondary"
+          className="max-w-2xl mx-auto px-4 space-y-3 text-sm text-secondary"
         >
-          
           {history.map((msg, i) => (
             <ChatBubble
               key={i}
@@ -168,13 +172,13 @@ setHistory((msgs) => [
         </div>
       </div>
 
-      {/* Unified Fixed Footer */}
-      <div className="fixed bottom-0 left-0 px-5 right-0 z-40">
+      {/* Fixed Footer */}
+      <div className="fixed bottom-0 left-0 right-0 z-40">
         {/* Top shadow gradient */}
         <div className="pointer-events-none h-6 relative">
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] to-transparent"></div>
         </div>
-        <div className="max-w-2xl mx-auto pb-4 bg-primary">
+        <div className="max-w-2xl mx-auto px-4 pb-4 bg-primary">
           {isGroupB ? (
             <div className={`flex items-end bg-secondary border border-color rounded-lg p-3 ${
               aiLoading ? "cursor-not-allowed" : ""
@@ -245,7 +249,7 @@ setHistory((msgs) => [
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
