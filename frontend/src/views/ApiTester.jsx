@@ -137,7 +137,7 @@ const ApiTester = () => {
       <div className="fixed top-0 left-0 right-0 z-40">
         <div className="max-w-2xl mx-auto border-b border-color bg-primary py-4 px-8 pt-12">
           <div className="text-sm text-secondary">These: {thesis ? thesis.title : "---"}</div>
-          <div className="text-lg font-semibold text-primary">{thesis ? thesis.text : "---"}</div>
+          <div className="text-lg font-semibold text-primary min-h-[2lh]">{thesis ? thesis.text : "---"}</div>
         </div>
         {/* Bottom shadow gradient */}
         <div className="pointer-events-none h-4 relative">
@@ -198,7 +198,7 @@ const ApiTester = () => {
         <div className="text-sm text-secondary">
           These: {thesis ? thesis.title : "---"}
         </div>
-        <div className="text-lg font-semibold text-primary">
+        <div className="text-lg font-semibold text-primary min-h-[2lh]">
           {thesis ? thesis.text : "---"}
         </div>
       </div>

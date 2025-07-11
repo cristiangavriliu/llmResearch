@@ -1,7 +1,7 @@
 import React from "react";
 
 const LandingPage = () => (
-  <div className="py-12 px-4">
+  <div className="py-14 px-4">
     <h1 className="text-2xl font-bold max-w-md text-primary mb-6">
       LLMs und politische Meinungsbildung
     </h1>
