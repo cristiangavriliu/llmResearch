@@ -10,7 +10,7 @@ const StudyOverview = () => {
   const surveyUrl = `https://survey.ifkw.lmu.de/AI-Survey/?PROLIFIC_PID=${randomPID}`;
 
   return (
-    <div className="py-6 px-4">
+    <div className="py-12 px-4">
       <h1 className="text-2xl font-bold text-primary mb-4">Studienübersicht</h1>
       <p className="text-base mb-4 max-w-md text-justify">
         Die Studie befindet sich in der Pilot Phase, momentan sammeln wir erste freiwillige Tester für die Studie. Falls du teilnehmen willst, bitte klicke auf den folgenden Link:

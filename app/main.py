@@ -35,11 +35,11 @@ class StudyContinueRequest(BaseModel):
     history: List[dict]
 
 class ChatRequest(BaseModel):
-    thesis_text: str
+    thesis_id: int
     api_key: str
     model: str
-    position: int
-    user_statement: str
+    initial_position: int
+    initial_statement: str
     history: List[dict]
 
 class StudySubmissionRequest(BaseModel):
@@ -221,11 +221,17 @@ async def download_study_data():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to generate CSV: {str(e)}")
 
-# API testing chat
-@app.post("/chat")
-async def chat_endpoint(request: ChatRequest):
-    # Placeholder logic for API testing - implement later
-    return {"role": "assistant", "content": "API testing not implemented yet"}
+
+@app.post("/api-tester/chat")
+async def api_tester_chat(request: ChatRequest):
+    # Placeholder logic: echo last user message or statement
+    if request.history and isinstance(request.history, list):
+        last_user = next((msg for msg in reversed(request.history) if msg.get("role") == "user"), None)
+        content = last_user["content"] if last_user else request.statement
+    else:
+        content = request.statement
+    return {"role": "assistant", "content": f"API-Tester Echo: {content}"}
+
 
 # Catch-all route for frontend (for React Router) - MUST be last!
 @app.get("/{full_path:path}")

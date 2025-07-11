@@ -70,7 +70,7 @@ const Navigation = () => (
       {/* Theme Component Container */}
       <ThemeToggle />
     </nav>
-    <main className="pt-10">
+    <main>
       <Outlet />
     </main>
   </div>
