@@ -33,7 +33,7 @@ const CompletionPhase = ({ studyData, submissionState, retrySubmission }) => {
           <h2 className="text-xl font-bold text-primary mb-2">Vielen Dank!</h2>
           <p className="text-secondary">
             Ihre Versuchsdaten wurden erfolgreich gespeichert.<br />
-            Sie können nun auf weiter klicken.
+            Wenn Sie nach untern scrollen können Sie nun auf weiter klicken.
           </p>
         </div>
       )}
