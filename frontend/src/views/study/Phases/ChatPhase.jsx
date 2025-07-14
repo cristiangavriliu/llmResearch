@@ -208,6 +208,8 @@ setHistory((msgs) => [
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 disabled={aiLoading}
+                onCopy={e => e.preventDefault()}
+                onPaste={e => e.preventDefault()}
               />
               <button
                 className={`ml-2 bg-accent hover:bg-[var(--accent-color-secondary)] transition rounded-full px-4 py-2 text-white text-sm font-medium ${

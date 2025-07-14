@@ -88,6 +88,8 @@ const InitialPhase = ({ nextPhase, studyData, setStudyData }) => {
               initialStatement: e.target.value
             }))
           }
+          onCopy={e => e.preventDefault()}
+          onPaste={e => e.preventDefault()}
         />
       </div>
 
