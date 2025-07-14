@@ -106,8 +106,8 @@ async def study_group_b_continue(request: StudyContinueRequest):
         return {"role": "error", "content": f"Main.py Error: Thesis {request.thesis_id} not found in THESIS_DATA"}
     result = generate_group_b_response(
         thesis_text=thesis_data["thesis_text"],
-        position=0,
-        user_statement="",
+        position=request.initial_position,
+        user_statement=request.initial_statement,
         pro_text=thesis_data["pro"],
         contra_text=thesis_data["contra"],
         history=request.history
