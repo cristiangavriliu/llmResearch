@@ -40,16 +40,16 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
   useEffect(() => {
     if (initialFetchDone.current) return;
     initialFetchDone.current = true;
-    
+
     // Set chat start timestamp
-    setStudyData(prevData => ({ 
-      ...prevData, 
+    setStudyData(prevData => ({
+      ...prevData,
       timestamps: {
         ...prevData.timestamps,
         chatStart: Date.now()
       }
     }));
-    
+
     const fetchInitialAIMessage = async () => {
       setAiLoading(true);
       try {
@@ -76,24 +76,24 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
         // Check for Recived message is in proper format
         const data = await res.json();
         if (data.role && data.content) {
-setHistory((msgs) => [
-  ...msgs,
-  { role: data.role, content: data.content }
-]);
+          setHistory((msgs) => [
+            ...msgs,
+            { role: data.role, content: data.content }
+          ]);
         } else {
-setHistory((msgs) => [
-  ...msgs,
-  { role: "error", content: "JSX error: Ungültiges Antwortformat vom Backend." }
-]);
+          setHistory((msgs) => [
+            ...msgs,
+            { role: "error", content: `Ungültiges Antwortformat vom Backend. Erhaltene Daten: ${JSON.stringify(data)}` }
+          ]);
         }
-      } catch {
-setHistory((msgs) => [
-  ...msgs,
-  {
-    role: "error",
-    content: "JSX error: Fehler beim Abrufen der Antwort vom Backend.",
-  },
-]);
+      } catch (error) {
+        setHistory((msgs) => [
+          ...msgs,
+          {
+            role: "error",
+            content: `Fehler: ${error.message}`,
+          },
+        ]);
       }
       setAiLoading(false);
     };
@@ -118,7 +118,11 @@ setHistory((msgs) => [
         thesis_id: studyParams.thesisId,
         initial_position: studyData.initialPosition,
         initial_statement: studyData.initialStatement,
-        history: [...history, { role: "user", content: input }]
+        history: [...history, { role: "user", content: input }].map(msg =>
+          msg.role === "error"
+            ? { role: "assistant", content: `[ERROR] ${msg.content}` }
+            : msg
+        )
       };
 
       // console.log("Sending User message:", requestBody);
@@ -133,10 +137,10 @@ setHistory((msgs) => [
       if (data.role && data.content) {
         setHistory(prev => [...prev, { role: data.role, content: data.content }]);
       } else {
-        setHistory(prev => [...prev, { role: "error", content: "Ungültiges Antwortformat vom Backend." }]);
+        setHistory(prev => [...prev, { role: "error", content: `Ungültiges Antwortformat vom Backend. Erhaltene Daten: ${JSON.stringify(data)}` }]);
       }
-    } catch {
-      setHistory(prev => [...prev, { role: "error", content: "Fehler beim Abrufen der Antwort vom Backend." }]);
+    } catch (error) {
+      setHistory(prev => [...prev, { role: "error", content: `Fehler: ${error.message}` }]);
     }
 
     setAiLoading(false);
@@ -167,7 +171,7 @@ setHistory((msgs) => [
       </div>
 
       {/* Chat Messages - Full width container for proper scrollbar positioning */}
-      <div 
+      <div
         ref={chatContainerRef}
         className={`bg-primary h-screen overflow-y-auto scrollbar-hide scroll-smooth ${isOneLine ? "pt-32" : "pt-40"} pb-32`}
       >
@@ -196,15 +200,13 @@ setHistory((msgs) => [
         </div>
         <div className="max-w-2xl mx-auto px-4 pb-4 bg-primary">
           {isGroupB ? (
-            <div className={`flex items-end bg-secondary border border-color rounded-lg p-3 ${
-              aiLoading ? "cursor-not-allowed" : ""
-            }`}>
+            <div className={`flex items-end bg-secondary border border-color rounded-lg p-3 ${aiLoading ? "cursor-not-allowed" : ""
+              }`}>
               <textarea
                 rows={1}
                 placeholder="Deine Nachricht..."
-                className={`flex-grow resize-none overflow-auto bg-transparent text-primary focus:outline-none text-sm py-1 pl-1 min-h-[68px] max-h-32 ${
-                  aiLoading ? "cursor-not-allowed" : ""
-                }`}
+                className={`flex-grow resize-none overflow-auto bg-transparent text-primary focus:outline-none text-sm py-1 pl-1 min-h-[68px] max-h-32 ${aiLoading ? "cursor-not-allowed" : ""
+                  }`}
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 disabled={aiLoading}
@@ -212,14 +214,13 @@ setHistory((msgs) => [
                 onPaste={e => e.preventDefault()}
               />
               <button
-                className={`ml-2 bg-accent hover:bg-[var(--accent-color-secondary)] transition rounded-full px-4 py-2 text-white text-sm font-medium ${
-                  canContinue && !aiLoading
-                    ? "cursor-pointer"
-                    : "opacity-40 cursor-not-allowed"
-                }`}
+                className={`ml-2 bg-accent hover:bg-[var(--accent-color-secondary)] transition rounded-full px-4 py-2 text-white text-sm font-medium ${canContinue && !aiLoading
+                  ? "cursor-pointer"
+                  : "opacity-40 cursor-not-allowed"
+                  }`}
                 onClick={() => {
-                  setStudyData(prevData => ({ 
-                    ...prevData, 
+                  setStudyData(prevData => ({
+                    ...prevData,
                     chatHistory: history,
                     timestamps: {
                       ...prevData.timestamps,
@@ -244,14 +245,13 @@ setHistory((msgs) => [
             </div>
           ) : (
             <button
-              className={`bg-accent text-white px-4 py-2 rounded font-semibold hover:bg-[var(--accent-color-secondary)] transition ml-auto block ${
-                history.length >= 2 && !aiLoading
-                  ? "cursor-pointer"
-                  : "opacity-40 cursor-not-allowed"
-              }`}
+              className={`bg-accent text-white px-4 py-2 rounded font-semibold hover:bg-[var(--accent-color-secondary)] transition ml-auto block ${history.length >= 2 && !aiLoading
+                ? "cursor-pointer"
+                : "opacity-40 cursor-not-allowed"
+                }`}
               onClick={() => {
-                setStudyData(prevData => ({ 
-                  ...prevData, 
+                setStudyData(prevData => ({
+                  ...prevData,
                   chatHistory: history,
                   timestamps: {
                     ...prevData.timestamps,

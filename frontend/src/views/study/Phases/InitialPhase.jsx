@@ -2,7 +2,7 @@ import React from "react";
 
 const InitialPhase = ({ nextPhase, studyData, setStudyData }) => {
 
-  
+
   const isNextEnabled = (studyData.initialStatement || "").trim().length >= 50;
 
   return (
@@ -28,13 +28,13 @@ const InitialPhase = ({ nextPhase, studyData, setStudyData }) => {
             id="initial-position"
             min={0}
             max={100}
-          value={studyData.initialPosition ?? 50}
-          onChange={e =>
-            setStudyData(prev => ({
-              ...prev,
-              initialPosition: Number(e.target.value)
-            }))
-          }
+            value={studyData.initialPosition ?? 50}
+            onChange={e =>
+              setStudyData(prev => ({
+                ...prev,
+                initialPosition: Number(e.target.value)
+              }))
+            }
             className="w-full appearance-none bg-[var(--text-secondary)] h-2 rounded"
           />
           <div className="flex justify-between text-sm text-secondary">
@@ -55,13 +55,13 @@ const InitialPhase = ({ nextPhase, studyData, setStudyData }) => {
             id="initial-informed"
             min={0}
             max={100}
-          value={studyData.initialInformation ?? 50}
-          onChange={e =>
-            setStudyData(prev => ({
-              ...prev,
-              initialInformation: Number(e.target.value)
-            }))
-          }
+            value={studyData.initialInformation ?? 50}
+            onChange={e =>
+              setStudyData(prev => ({
+                ...prev,
+                initialInformation: Number(e.target.value)
+              }))
+            }
             className="w-full appearance-none bg-[var(--text-secondary)] h-2 rounded"
           />
           <div className="flex justify-between text-sm text-secondary">
@@ -97,9 +97,8 @@ const InitialPhase = ({ nextPhase, studyData, setStudyData }) => {
       <button
         onClick={nextPhase}
         disabled={!isNextEnabled}
-        className={`bg-accent hover:bg-[var(--accent-color-secondary)] text-white px-4 py-2 rounded font-semibold transition ml-auto block ${
-          isNextEnabled ? "cursor-pointer" : "opacity-40 cursor-default"
-        }`}
+        className={`bg-accent hover:bg-[var(--accent-color-secondary)] text-white px-4 py-2 rounded font-semibold transition ml-auto block ${isNextEnabled ? "cursor-pointer" : "opacity-40 cursor-default"
+          }`}
       >
         Diskussion starten
       </button>
