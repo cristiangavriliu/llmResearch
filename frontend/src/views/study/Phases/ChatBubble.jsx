@@ -28,7 +28,7 @@ const ChatBubble = ({ role, content, isTyping }) => {
       <div className="flex justify-start">
         <div className="max-w-2xl bg-red-100 border border-red-300 text-red-800 p-3 rounded-2xl text-sm break-words">
           <div className="font-semibold mb-1 flex items-center gap-2">
-            Fehler
+            Verbindungsfehler
           </div>
           <div className="prose prose-sm whitespace-pre-line">
             Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut. Oder falls der Fehler bestehen bleibt, melden Sie den Fehler der Studienleitung.

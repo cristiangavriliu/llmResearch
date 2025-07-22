@@ -61,6 +61,7 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
           thesis_id: studyParams.thesisId,
           initial_position: studyData.initialPosition,
           initial_statement: studyData.initialStatement,
+          prolific_pid: studyData.prolificPid
         };
 
         // console.log("Sending Initial request:", requestBody);
@@ -118,6 +119,7 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
         thesis_id: studyParams.thesisId,
         initial_position: studyData.initialPosition,
         initial_statement: studyData.initialStatement,
+        prolific_pid: studyData.prolificPid,
         history: [...history, { role: "user", content: input }].map(msg =>
           msg.role === "error"
             ? { role: "assistant", content: `[ERROR] ${msg.content}` }

@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 import os
 import csv
 import io
@@ -28,12 +28,14 @@ class StudyStartRequest(BaseModel):
     thesis_id: int
     initial_position: int
     initial_statement: str
+    prolific_pid: Optional[str] = None
 
 class StudyContinueRequest(BaseModel):
     thesis_id: int
     initial_position: int
     initial_statement: str
     history: List[dict]
+    prolific_pid: Optional[str] = None
 
 class ChatRequest(BaseModel):
     thesis_id: int
@@ -74,7 +76,8 @@ async def study_group_a_start(request: StudyStartRequest):
         position=request.initial_position,
         user_statement=request.initial_statement,
         pro_text=thesis_data["pro"],
-        contra_text=thesis_data["contra"]
+        contra_text=thesis_data["contra"],
+        prolific_pid=request.prolific_pid
     )
     return result
 
@@ -92,7 +95,8 @@ async def study_group_b_start(request: StudyStartRequest):
         user_statement=request.initial_statement,
         pro_text=thesis_data["pro"],
         contra_text=thesis_data["contra"],
-        history=None
+        history=None,
+        prolific_pid=request.prolific_pid
     )
     return result
 
@@ -110,7 +114,8 @@ async def study_group_b_continue(request: StudyContinueRequest):
         user_statement=request.initial_statement,
         pro_text=thesis_data["pro"],
         contra_text=thesis_data["contra"],
-        history=request.history
+        history=request.history,
+        prolific_pid=request.prolific_pid
     )
     return result
 
