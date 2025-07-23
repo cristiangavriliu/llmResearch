@@ -15,7 +15,7 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
   const initialFetchDone = useRef(false);
 
 
-  // Scroll to bottom on new message (scroll only the chat container, not the window)
+  // Scroll to bottom on new message
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTo({
@@ -50,59 +50,58 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
       }
     }));
 
-    const fetchInitialAIMessage = async () => {
-      setAiLoading(true);
-      try {
-        const endpoint = studyParams?.group === "B"
-          ? "/study/group-b/start"
-          : "/study/group-a/start";
-
-        const requestBody = {
-          thesis_id: studyParams.thesisId,
-          initial_position: studyData.initialPosition,
-          initial_statement: studyData.initialStatement,
-          prolific_pid: studyData.prolificPid
-        };
-
-        // console.log("Sending Initial request:", requestBody);
-
-        // Fetch initial AI message
-        // Use the appropriate endpoint based on group
-        const res = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(requestBody),
-        });
-
-        // Check for Recived message is in proper format
-        const data = await res.json();
-        if (data.role && data.content) {
-          setHistory((msgs) => [
-            ...msgs,
-            { role: data.role, content: data.content }
-          ]);
-        } else {
-          setHistory((msgs) => [
-            ...msgs,
-            { role: "error", content: `Ungültiges Antwortformat vom Backend. Erhaltene Daten: ${JSON.stringify(data)}` }
-          ]);
-        }
-      } catch (error) {
-        setHistory((msgs) => [
-          ...msgs,
-          {
-            role: "error",
-            content: `Fehler: ${error.message}`,
-          },
-        ]);
-      }
-      setAiLoading(false);
-    };
     fetchInitialAIMessage();
   }, []);
 
+  // Function to fetch initial AI message
+  const fetchInitialAIMessage = async () => {
+    setAiLoading(true);
+    try {
+      const endpoint = studyParams?.group === "B"
+        ? "/study/group-b/start"
+        : "/study/group-a/start";
 
+      const requestBody = {
+        thesis_id: studyParams.thesisId,
+        initial_position: studyData.initialPosition,
+        initial_statement: studyData.initialStatement,
+        prolific_pid: studyData.prolificPid
+      };
 
+      // console.log("Sending Initial request:", requestBody);
+
+      // Fetch initial AI message
+      // Use the appropriate endpoint based on group
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
+
+      // Check for Recived message is in proper format
+      const data = await res.json();
+      if (data.role && data.content) {
+        setHistory((msgs) => [
+          ...msgs,
+          { role: data.role, content: data.content }
+        ]);
+      } else {
+        setHistory((msgs) => [
+          ...msgs,
+          { role: "error", content: `Ungültiges Antwortformat vom Backend. Erhaltene Daten: ${JSON.stringify(data)}` }
+        ]);
+      }
+    } catch (error) {
+      setHistory((msgs) => [
+        ...msgs,
+        {
+          role: "error",
+          content: `Fehler: ${error.message}`,
+        },
+      ]);
+    }
+    setAiLoading(false);
+  };
 
   // Send user message (group B only)
   const sendMessage = async () => {
@@ -186,10 +185,11 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
               key={i}
               role={msg.role}
               content={msg.content}
+              isGroupB={isGroupB}
             />
           ))}
           {aiLoading && (
-            <ChatBubble text="" fromUser={false} isTyping />
+            <ChatBubble role="assistant" content="" isTyping isGroupB={isGroupB} />
           )}
         </div>
       </div>
@@ -246,26 +246,41 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
               </button>
             </div>
           ) : (
-            <button
-              className={`bg-accent text-white px-4 py-2 rounded font-semibold hover:bg-[var(--accent-color-secondary)] transition ml-auto block ${history.length >= 2 && !aiLoading
-                ? "cursor-pointer"
-                : "opacity-40 cursor-not-allowed"
-                }`}
-              onClick={() => {
-                setStudyData(prevData => ({
-                  ...prevData,
-                  chatHistory: history,
-                  timestamps: {
-                    ...prevData.timestamps,
-                    chatEnd: Date.now()
-                  }
-                }));
-                nextPhase();
-              }}
-              disabled={history.length < 2 || aiLoading}
-            >
-              weiter
-            </button>
+            <div className="flex justify-end gap-2">
+              {/* Only show retry button if last message was an error */}
+              {history.length > 0 && history[history.length - 1].role === "error" && (
+                <button
+                  className={`bg-accent text-white px-4 py-2 rounded font-semibold hover:bg-[var(--accent-color-secondary)] transition ${!aiLoading
+                    ? "cursor-pointer"
+                    : "opacity-40 cursor-not-allowed"
+                    }`}
+                  onClick={fetchInitialAIMessage}
+                  disabled={aiLoading}
+                >
+                  Antwort erneut generieren
+                </button>
+              )}
+              <button
+                className={`bg-accent text-white px-4 py-2 rounded font-semibold hover:bg-[var(--accent-color-secondary)] transition ${history.length >= 2 && !aiLoading
+                  ? "cursor-pointer"
+                  : "opacity-40 cursor-not-allowed"
+                  }`}
+                onClick={() => {
+                  setStudyData(prevData => ({
+                    ...prevData,
+                    chatHistory: history,
+                    timestamps: {
+                      ...prevData.timestamps,
+                      chatEnd: Date.now()
+                    }
+                  }));
+                  nextPhase();
+                }}
+                disabled={history.length < 2 || aiLoading}
+              >
+                weiter
+              </button>
+            </div>
           )}
         </div>
       </div>

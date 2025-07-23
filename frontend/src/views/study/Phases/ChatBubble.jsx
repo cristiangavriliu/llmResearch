@@ -5,8 +5,9 @@ import React from "react";
  * @param {string} role - "user", "assistant", or "error"
  * @param {string} content - The message text.
  * @param {boolean} isTyping - True for the typing indicator.
+ * @param {boolean} isGroupB - Whether the user is in group B
  */
-const ChatBubble = ({ role, content, isTyping }) => {
+const ChatBubble = ({ role, content, isTyping, isGroupB = false }) => {
   // Typing indicator with 3 bouncing dots
   if (isTyping) {
     return (
@@ -31,7 +32,9 @@ const ChatBubble = ({ role, content, isTyping }) => {
             Verbindungsfehler
           </div>
           <div className="prose prose-sm whitespace-pre-line">
-            Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut. Oder falls der Fehler bestehen bleibt, melden Sie den Fehler der Studienleitung.
+            {isGroupB
+              ? "Ein Fehler ist aufgetreten. Bitte versuchen Sie erneut, eine Nachricht zu senden. Wenn das Problem weiterhin besteht, klicken Sie nach drei Nachrichten auf „weiter“ um die daten abzuspeichern und melden Sie es der Studienleitung nach abschluss der Studie"
+              : "Ein Fehler ist aufgetreten. Klicken Sie auf „Antwort erneut generieren“. Falls weiterhin keine Antwort erscheint, klicken Sie auf „weiter“ um die daten abzuspeichern und informieren Sie die Studienleitung nach abschluss der Studie."}
           </div>
         </div>
       </div>
