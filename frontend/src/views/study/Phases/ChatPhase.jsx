@@ -57,9 +57,7 @@ const ChatPhase = ({ nextPhase, studyParams, studyData, setStudyData }) => {
   const fetchInitialAIMessage = async () => {
     setAiLoading(true);
     try {
-      const endpoint = studyParams?.group === "B"
-        ? "/study/group-b/start"
-        : "/study/group-a/start";
+      const endpoint = `/study/group-${studyParams?.group.toLowerCase()}/start`;
 
       const requestBody = {
         thesis_id: studyParams.thesisId,

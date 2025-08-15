@@ -87,8 +87,8 @@ const StudyIframe = () => {
       }
 
       // Validate group
-      if (group && group.trim() && !['A', 'B'].includes(group)) {
-        errors.push("group must be 'A' or 'B'");
+      if (group && group.trim() && !['A', 'B', 'C'].includes(group)) {
+        errors.push("group must be 'A', 'B', or 'C'");
       }
 
       if (errors.length > 0) {

@@ -8,7 +8,7 @@ import csv
 import io
 import json
 from datetime import datetime
-from app.api_interface import generate_group_a_response, generate_group_b_response, generate_api_tester_response
+from app.api_interface import generate_group_a_response, generate_group_b_response, generate_group_c_response, generate_api_tester_response
 from app.thesis_data import get_thesis_data
 from app.database import db_manager
 from wahl_o_maht_thesen import get_thesis_by_id
@@ -96,6 +96,24 @@ async def study_group_b_start(request: StudyStartRequest):
         pro_text=thesis_data["pro"],
         contra_text=thesis_data["contra"],
         history=None,
+        prolific_pid=request.prolific_pid
+    )
+    return result
+
+# Group C start
+@app.post("/study/group-c/start")
+async def study_group_c_start(request: StudyStartRequest):
+    # Get thesis data for Thesis ID
+    thesis_data = get_thesis_data(request.thesis_id)
+    if not thesis_data:
+        return {"role": "error", "content": f"Main.py Error: Thesis {request.thesis_id} not found in THESIS_DATA"}
+    
+    result = generate_group_c_response(
+        thesis_text=thesis_data["thesis_text"],
+        position=request.initial_position,
+        user_statement=request.initial_statement,
+        pro_text=thesis_data["pro"],
+        contra_text=thesis_data["contra"],
         prolific_pid=request.prolific_pid
     )
     return result
