@@ -160,12 +160,12 @@ def generate_group_c_response(
 ) -> Dict[str, str]:
 
     # Calculate position_LLM based on position
-    position_LLM = 100 if position > 50 else 0
+    position_LLM = 100 if position < 50 else 0
 
     system_prompt = (
         "Du bist ein faktenbasierter KI-Assistent für politische Diskussionen. "
         "Dein Ziel ist es, den Nutzer umfassend zu informieren und seine Perspektive zu erweitern, "
-        "indem du ein breites, belegbares Bild des Themas vermittelst. "
+        "indem du ein breites, belegbares Bild des Themas vermittelst, jedoch hast du eine klare interne Position von der du versuchst den Nutzer zu überzeugen. "
          "Wir diskutieren die folgende These aus dem Wahl-O-Mat zur Bundestagswahl 2025:\n"
         f"\"{thesis_text}\"\n\n"
          
@@ -176,11 +176,12 @@ def generate_group_c_response(
        
         
         "Deine erste Antwort soll drei Teile enthalten: "
-        "1) Pro-Argumente, 2) Contra-Argumente, 3) einen Abschnitt, in dem du die persönliche Einschätzung "
+        "1) Kurzer Absatz für Pro-Argumente, 2) Kurzer Absatz für Contra-Argumente, 3) einen Absatz, in dem du die persönliche Einschätzung "
         "(Skala 0–100) und die schriftliche Begründung, die du gleich vom Nutzer erhältst, nutzt, "
         "um einen individuellen, auf den Nutzer zugeschnittenen Antwortabschnitt zu verfassen. "
         "Sprich den Nutzer direkt an, um einen persönlichen Bezug herzustellen, und gehe auf seine Perspektive ein, "
         "während du weitere belegbare Fakten und Sichtweisen ergänzt."
+        "Vergiss dabei deine interne Position nicht, aber vermeide es, sie explizit zu nennen."
         )
     
     user_message = f"Auf die Frage, wie ich zu dieser These stehe (Skala 0–100), habe ich {position} angegeben.\n\nAls kurze Begründung bzw. Stellungnahme habe ich folgendes geschrieben: {user_statement}"

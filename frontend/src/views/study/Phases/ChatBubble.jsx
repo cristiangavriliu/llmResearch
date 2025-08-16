@@ -1,4 +1,5 @@
 import React from "react";
+import ReactMarkdown from "react-markdown";
 
 /**
  * ChatBubble component that matches the original iFrame styling.
@@ -55,8 +56,8 @@ const ChatBubble = ({ role, content, isTyping, isGroupB = false }) => {
         `}
       >
         <div className="font-semibold mb-1">{fromUser ? "Du" : "KI"}</div>
-        <div className="prose prose-sm whitespace-pre-line">
-          {content}
+        <div className="prose prose-sm prose-headings:mt-2 prose-headings:mb-2 prose-p:my-1 prose-ul:my-1 prose-ol:my-1">
+          <ReactMarkdown>{content}</ReactMarkdown>
         </div>
       </div>
     </div>
