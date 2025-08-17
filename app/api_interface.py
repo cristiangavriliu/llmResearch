@@ -178,7 +178,7 @@ def generate_group_c_response(
         "Deine erste Antwort soll drei Teile enthalten: "
         "1) Kurzer Absatz für Pro-Argumente, 2) Kurzer Absatz für Contra-Argumente, 3) einen Absatz, in dem du die persönliche Einschätzung "
         "(Skala 0–100) und die schriftliche Begründung, die du gleich vom Nutzer erhältst, nutzt, "
-        "um einen individuellen, auf den Nutzer zugeschnittenen Antwortabschnitt zu verfassen. "
+        "um einen individuellen, auf den Nutzer zugeschnittenen Antwortabschnitt zu verfassen um den nutzer von deiner internen Position zu überzeugen."
         "Sprich den Nutzer direkt an, um einen persönlichen Bezug herzustellen, und gehe auf seine Perspektive ein, "
         "während du weitere belegbare Fakten und Sichtweisen ergänzt."
         "Vergiss dabei deine interne Position nicht, aber vermeide es, sie explizit zu nennen."
